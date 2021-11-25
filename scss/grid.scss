@@ -1,0 +1,110 @@
+$sizes: (
+  'xs': 320px,
+  's': 576px,
+  'm': 768px,
+  'l': 992px,
+  'xl': 1200px,
+  'xxl': 1400px
+);
+
+@function size($name) {
+  @return map-get($sizes, $name);
+}
+body * {
+  box-sizing: border-box;
+}
+
+/*
+main {
+  @extend %container;
+}
+*/
+%container,
+.container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  @each $size, $screenwidth in $sizes {
+    @media screen and (min-width: $screenwidth) {
+      width: round(($screenwidth * 0.95) / 10) * 10;
+    }
+  }
+  // @media screen and (min-width: size('xs')) { width: 300px;}
+  // @media screen and (min-width: size('s')) { width: 540px; }
+  // @media screen and (min-width: size('m')) { width: 720px; }
+  // @media screen and (min-width: size('l')) { width: 960px; }
+  // @media screen and (min-width: size('xl')) { width: 1140px; }
+  // @media screen and (min-width: size('xxl')) { width: 1320px; }
+}
+
+%container-fluid,
+.container-fluid {
+  width: 100%;
+}
+
+/*
+  <div class="col-s-6"></div>
+  <div class="info col-m-5"></div>
+*/
+.row,
+.col,
+[class^='col-']
+[class*='col-'] {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: space-around;
+  flex-wrap: wrap;
+  &.fd-rowr { flex-direction: row-reverse; }
+  &.fd-col { flex-direction: column; }
+  &.fd-colrr { flex-direction: column-reverse; }
+
+  &.jc-center { justify-content: center; }
+  &.jc-space-between { justify-content: space-between; }
+  &.jc-space-around { justify-content: space-around; }
+  &.jc-space-evenly { justify-content: space-evenly; }
+  &.jc-initial { justify-content: initial; }
+  &.jc-inherit { justify-content: inherit; }
+
+  &.align-left { justify-content: flex-start; }
+  &.align-right { justify-content: flex-end; }
+  &.align-top { justify-content: flex-start; }
+  &.align-bottom { justify-content: flex-end; }
+
+  &.nowrap { flex-wrap: nowrap; }
+}
+
+[class^='col-'],
+[class*='col-'],
+.col {
+  width: 100%;
+  padding: .5rem;
+}
+
+@for $i from 1 through 12 {
+  $width: calc(100% / #{(12 / $i)});
+
+  %col-#{$i},
+  .col-#{$i} {
+    width: $width;
+  }
+  
+  @each $size, $screenwidth in $sizes {
+    // $lastwidth: $screenwidth;
+
+    %col-#{$size}-#{$i},
+    .col-#{$size}-#{$i} {
+      @media screen and (min-width: $screenwidth) {
+        width: $width;
+      }
+      
+      // @if $size == 's' {
+        // @media screen and (max-width: $screenwidth) { width: $width; }
+      // } @else if $size == 'xxl' {
+        // @media screen and (min-width: $screenwidth) { width: $width; }
+      // } @else {
+        // @media screen and (min-width: $lastwidth) and (max-width: $screenwidth) { width: $width; }
+      // }
+    }
+  }
+}
