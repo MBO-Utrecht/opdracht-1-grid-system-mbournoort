@@ -1,0 +1,15 @@
+{
+  "name": "opdracht1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "scss": "node-sass --watch scss -o css",
+    "scss2": "node-sass scss -o css"
+  },
+  "author": "Robijn",
+  "license": "MIT",
+  "dependencies": {
+    "node-sass": "^6.0.1"
+  }
+}
